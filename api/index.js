@@ -131,10 +131,17 @@ app.post("/add-comment", async (req, res) => {
     res.status(401).json({ message: "Unauthorized: Invalid token" });
   }
 });
-
 app.post("/logout", (req, res) => {
-  res.cookie("token", "").json("ok");
+  // Clear the token cookie
+  res.cookie("token", "", {
+    sameSite: "None", // Ensure the cookie is sent for cross-site requests
+    secure: true,     // Require HTTPS
+    expires: new Date(0) // Set expiration date to remove the cookie immediately
+  }).json("ok");
 });
+// app.post("/logout", (req, res) => {
+//   res.cookie("token", "").json("ok");
+// });
 
 app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
   const { originalname, path } = req.file;
