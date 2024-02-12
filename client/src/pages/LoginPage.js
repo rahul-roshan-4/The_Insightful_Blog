@@ -9,7 +9,7 @@ export default function LoginPage() {
   const { setUserInfo } = useContext(UserContext);
   async function login(ev) {
     ev.preventDefault();
-    const response = await fetch(process.env.React_App_Host_Api+"/login", {
+    const response = await fetch(process.env.React_App_Host_Api + "/login", {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: { "Content-Type": "application/json" },
@@ -30,21 +30,27 @@ export default function LoginPage() {
     return <Navigate to={"/"} />;
   }
   return (
-    <form className="login" onSubmit={login}>
+    <form className="SignIn" onSubmit={login}>
       <h1>Login</h1>
-      <input
-        type="text"
-        placeholder="username"
-        value={username}
-        onChange={(ev) => setUsername(ev.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="password"
-        value={password}
-        onChange={(ev) => setPassword(ev.target.value)}
-      />
-      <button>Login</button>
+      <div className="input-group">
+        <input
+          id="login-username"
+          type="text"
+          placeholder="Enter your username"
+          value={username}
+          onChange={(ev) => setUsername(ev.target.value)}
+        />
+      </div>
+      <div className="input-group">
+        <input
+          id="login-password"
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(ev) => setPassword(ev.target.value)}
+        />
+      </div>
+      <button type="submit">Sign in</button>
     </form>
   );
 }
